@@ -3,12 +3,15 @@ import { ImageSlider } from "../../components/atoms/ImageSlider";
 import { PetDetails } from "../../components/atoms/PetDetails";
 import { useQuery } from "@tanstack/react-query";
 import { getPetById } from "../../api/pets";
+import { useState } from "react";
+import { PetUpdateForm } from "../../components/molecules/PetUpdateForm";
 import Spinner from "../../components/atoms/Spinner";
 import ErrorTemplate from "../../components/atoms/ErrorTemplate";
 
 const PetId = () => {
   const { id: petId } = useParams();
   const navigate = useNavigate();
+  const [showUpdateModal, setShowUpdateModal] = useState(false);
 
   const {
     data: pet,
@@ -17,7 +20,7 @@ const PetId = () => {
   } = useQuery({
     queryKey: ["pet", petId],
     queryFn: () => getPetById(Number(petId)),
-    enabled: !!petId, // Only run the query if petId is available
+    enabled: !!petId,
   });
 
   if (isLoading) {
@@ -56,6 +59,14 @@ const PetId = () => {
 
   return (
     <div className="container mx-auto p-4 flex-grow">
+      <div className="flex justify-end mb-4 gap-2">
+        <button
+          className="btn btn-secondary"
+          onClick={() => setShowUpdateModal(true)}
+        >
+          Update Pet
+        </button>
+      </div>
       <div className="flex flex-col lg:flex-row gap-6 bg-base-100 p-6 rounded-lg shadow-xl">
         <div className="lg:w-1/2">
           <ImageSlider images={pet.photoUrls} />
@@ -64,6 +75,22 @@ const PetId = () => {
           <PetDetails pet={pet} />
         </div>
       </div>
+
+      {/* Update Pet Modal */}
+      {showUpdateModal && (
+        <dialog id="update_pet_modal" className="modal" open>
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Update Pet Details</h3>
+            <PetUpdateForm
+              pet={pet}
+              onClose={() => setShowUpdateModal(false)}
+            />
+          </div>
+          <form method="dialog" className="modal-backdrop">
+            <button onClick={() => setShowUpdateModal(false)}>close</button>
+          </form>
+        </dialog>
+      )}
     </div>
   );
 };

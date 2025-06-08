@@ -5,7 +5,7 @@ export const API_BASE_URL = "https://petstore.swagger.io/v2";
 export const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json", // Removed to allow explicit content-type for FormData
   },
 });
 
