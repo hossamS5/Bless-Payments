@@ -1,47 +1,71 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { PetCard } from "../../components/atoms/PetCard";
-import { pets } from "../../data/pets";
-import type { PetStatus } from "../../types/pet";
+import { useQuery } from "@tanstack/react-query";
+import { getPetByStatus } from "../../api/pets";
+import Spinner from "../../components/atoms/Spinner";
+import ErrorTemplate from "../../components/atoms/ErrorTemplate";
 
 const Landing = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState<PetStatus | "all">("all");
+  const [selectedStatus, setSelectedStatus] = useState<string[]>(["available"]);
 
-  const filteredPets = pets.filter((pet) => {
-    const matchesSearch = pet.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === "all" || pet.status === statusFilter;
-    return matchesSearch && matchesStatus;
+  const {
+    data: pets,
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["pets", selectedStatus],
+    queryFn: () => getPetByStatus(selectedStatus),
   });
+
+  const handleStatusChange = (status: string) => {
+    setSelectedStatus((prevStatus) =>
+      prevStatus.includes(status)
+        ? prevStatus.filter((s) => s !== status)
+        : [...prevStatus, status]
+    );
+  };
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <ErrorTemplate />;
+  }
 
   return (
     <div className="mx-auto p-4 md:p-8">
-      <div className="flex flex-col md:flex-row gap-4 mb-8">
-        <div className="form-control flex-1">
-          <input
-            type="text"
-            placeholder="Search pets..."
-            className="input input-bordered w-full"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        <select
-          className="select select-bordered w-full md:w-48"
-          value={statusFilter}
-          onChange={(e) => setStatusFilter(e.target.value as PetStatus | "all")}
+      <div className="flex justify-center mb-6 gap-2">
+        <button
+          className={`btn ${
+            selectedStatus.includes("available") ? "btn-primary" : "btn-ghost"
+          }`}
+          onClick={() => handleStatusChange("available")}
         >
-          <option value="all">All Status</option>
-          <option value="available">Available</option>
-          <option value="pending">Pending</option>
-          <option value="sold">Sold</option>
-        </select>
+          Available
+        </button>
+        <button
+          className={`btn ${
+            selectedStatus.includes("pending") ? "btn-primary" : "btn-ghost"
+          }`}
+          onClick={() => handleStatusChange("pending")}
+        >
+          Pending
+        </button>
+        <button
+          className={`btn ${
+            selectedStatus.includes("sold") ? "btn-primary" : "btn-ghost"
+          }`}
+          onClick={() => handleStatusChange("sold")}
+        >
+          Sold
+        </button>
       </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredPets.map((pet) => (
-          <PetCard key={pet.id} pet={pet} />
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        {pets?.map((pet, index) => (
+          <div key={index}>
+            <PetCard pet={pet} />
+          </div>
         ))}
       </div>
     </div>
