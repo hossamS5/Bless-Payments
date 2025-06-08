@@ -1,0 +1,24 @@
+import { Navigate } from "react-router-dom";
+
+import { useStoreAuth } from "../store/auth";
+
+const PublicRoute = ({
+  component: Component,
+}: {
+  component: React.ComponentType;
+}) => {
+  const token = useStoreAuth((state) => state.token);
+
+  if (token) {
+    return (
+      <Navigate
+        to="/"
+        replace
+        // state={{ path: location.pathname }}
+      />
+    );
+  }
+  return <Component />;
+};
+
+export default PublicRoute;
