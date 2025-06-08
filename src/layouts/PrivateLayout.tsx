@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Header } from "../atoms/Header";
+import { Header } from "../components/molecules/Header";
 
 export const PrivateLayout = () => {
   return (

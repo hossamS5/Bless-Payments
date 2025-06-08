@@ -25,7 +25,7 @@ export const ImageSlider = ({ images, className = "" }: ImageSliderProps) => {
               "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba"
             }
             alt={`Image ${index + 1}`}
-            className="w-full h-full object-cover"
+            className="object-cover w-full h-full"
             onError={(e) => {
               (e.target as HTMLImageElement).src =
                 "https://images.unsplash.com/photo-1583511655857-d19b40a7a54e";

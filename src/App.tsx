@@ -3,8 +3,9 @@ import routes from "./routes/routes";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import { Suspense } from "react";
-import { PrivateLayout } from "./components/layouts/PrivateLayout";
+import { PrivateLayout } from "./layouts/PrivateLayout";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Spinner from "./components/atoms/Spinner";
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={"loading"}>
+      <Suspense fallback={<Spinner />}>
         <BrowserRouter>
           <Routes>
             <Route element={<PrivateLayout />}>

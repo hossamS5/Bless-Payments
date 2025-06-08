@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { PetCard } from "../../components/atoms/PetCard";
+import PetCard from "../../components/molecules/PetCard";
 import { useQuery } from "@tanstack/react-query";
 import { getPetByStatus } from "../../api/pets";
 import Spinner from "../../components/atoms/Spinner";
-import ErrorTemplate from "../../components/atoms/ErrorTemplate";
+import ErrorTemplate from "../../components/templates/ErrorTemplate";
 
 const Landing = () => {
   const [selectedStatus, setSelectedStatus] = useState<string[]>(["available"]);
@@ -34,8 +34,8 @@ const Landing = () => {
   }
 
   return (
-    <div className="mx-auto p-4 md:p-8">
-      <div className="flex justify-center mb-6 gap-2">
+    <div className="p-4 mx-auto md:p-8">
+      <div className="flex justify-center gap-2 mb-6">
         <button
           className={`btn ${
             selectedStatus.includes("available") ? "btn-primary" : "btn-ghost"
@@ -61,7 +61,7 @@ const Landing = () => {
           Sold
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
         {pets?.map((pet, index) => (
           <div key={index}>
             <PetCard pet={pet} />

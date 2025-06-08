@@ -1,12 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { ImageSlider } from "../../components/atoms/ImageSlider";
-import { PetDetails } from "../../components/atoms/PetDetails";
+import { ImageSlider } from "../../components/molecules/ImageSlider";
+import { PetDetails } from "../../components/templates/PetDetails";
 import { useQuery } from "@tanstack/react-query";
 import { getPetById } from "../../api/pets";
 import { useState } from "react";
 import { PetUpdateForm } from "../../components/molecules/PetUpdateForm";
 import Spinner from "../../components/atoms/Spinner";
-import ErrorTemplate from "../../components/atoms/ErrorTemplate";
+import ErrorTemplate from "../../components/templates/ErrorTemplate";
 
 const PetId = () => {
   const { id: petId } = useParams();
@@ -33,11 +33,11 @@ const PetId = () => {
 
   if (!pet) {
     return (
-      <div className="min-h-screen bg-base-200 flex flex-col justify-center items-center p-4">
-        <div role="alert" className="alert alert-warning max-w-md text-center">
+      <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-base-200">
+        <div role="alert" className="max-w-md text-center alert alert-warning">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="stroke-current shrink-0 h-6 w-6"
+            className="w-6 h-6 stroke-current shrink-0"
             fill="none"
             viewBox="0 0 24 24"
           >
@@ -50,7 +50,7 @@ const PetId = () => {
           </svg>
           <span>Pet not found!</span>
         </div>
-        <button onClick={() => navigate("/")} className="btn btn-primary mt-4">
+        <button onClick={() => navigate("/")} className="mt-4 btn btn-primary">
           Go to Home
         </button>
       </div>
@@ -58,8 +58,8 @@ const PetId = () => {
   }
 
   return (
-    <div className="container mx-auto p-4 flex-grow">
-      <div className="flex justify-end mb-4 gap-2">
+    <div className="container flex-grow p-4 mx-auto">
+      <div className="flex justify-end gap-2 mb-4">
         <button
           className="btn btn-secondary"
           onClick={() => setShowUpdateModal(true)}
@@ -67,7 +67,7 @@ const PetId = () => {
           Update Pet
         </button>
       </div>
-      <div className="flex flex-col lg:flex-row gap-6 bg-base-100 p-6 rounded-lg shadow-xl">
+      <div className="flex flex-col gap-6 p-6 rounded-lg shadow-xl lg:flex-row bg-base-100">
         <div className="lg:w-1/2">
           <ImageSlider images={pet.photoUrls} />
         </div>
@@ -80,7 +80,7 @@ const PetId = () => {
       {showUpdateModal && (
         <dialog id="update_pet_modal" className="modal" open>
           <div className="modal-box">
-            <h3 className="font-bold text-lg">Update Pet Details</h3>
+            <h3 className="text-lg font-bold">Update Pet Details</h3>
             <PetUpdateForm
               pet={pet}
               onClose={() => setShowUpdateModal(false)}

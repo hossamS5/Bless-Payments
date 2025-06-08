@@ -54,12 +54,12 @@ export const PetUpdateForm = ({ pet, onClose }: PetUpdateFormProps) => {
         errors={errors}
         required
       />
-      <div className="form-control w-full">
+      <div className="w-full form-control">
         <label className="label">
           <span className="label-text">Status</span>
         </label>
         <select
-          className="select select-bordered w-full"
+          className="w-full select select-bordered"
           {...register("status", { required: "Status is required" })}
         >
           <option value="available">Available</option>
@@ -67,7 +67,7 @@ export const PetUpdateForm = ({ pet, onClose }: PetUpdateFormProps) => {
           <option value="sold">Sold</option>
         </select>
         {errors.status && (
-          <span className="text-error text-sm mt-1">
+          <span className="mt-1 text-sm text-error">
             {errors.status.message}
           </span>
         )}
@@ -89,7 +89,7 @@ export const PetUpdateForm = ({ pet, onClose }: PetUpdateFormProps) => {
         </button>
       </div>
       {updatePetMutation.isError && (
-        <div className="alert alert-error mt-4">
+        <div className="mt-4 alert alert-error">
           <span>Error updating pet. Please try again.</span>
         </div>
       )}

@@ -6,20 +6,20 @@ interface PetCardProps {
   pet: Pet;
 }
 
-export const PetCard = ({ pet }: PetCardProps) => {
+const PetCard = ({ pet }: PetCardProps) => {
   function shortenName(name: string, length: number) {
     if (!name) return "";
     return name.length > length ? name.slice(0, length) + "..." : name;
   }
 
   return (
-    <div className="card max-w-96 bg-base-100 shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+    <div className="overflow-hidden transition-shadow duration-300 shadow-xl card max-w-96 bg-base-100 hover:shadow-2xl">
       <figure className="relative">
         <ImageSlider images={pet?.photoUrls} className="h-64" />
       </figure>
       <div className="card-body">
         <div className="flex items-center justify-between gap-1">
-          <h2 className="card-title text-2xl font-bold">
+          <h2 className="text-2xl font-bold card-title">
             {shortenName(pet?.name || "", 14)}
           </h2>
           <div className="badge badge-secondary badge-lg whitespace-nowrap">
@@ -33,7 +33,7 @@ export const PetCard = ({ pet }: PetCardProps) => {
             </div>
           ))}
         </div>
-        <div className="card-actions justify-between mt-4">
+        <div className="justify-between mt-4 card-actions">
           <div
             className={`badge badge-lg text-xs capitalize shadpw-sm text-gray-600 ${
               pet?.status === "available"
@@ -54,3 +54,5 @@ export const PetCard = ({ pet }: PetCardProps) => {
     </div>
   );
 };
+
+export default PetCard;
