@@ -36,9 +36,9 @@ const Login = () => {
 
   return (
     <div className="flex items-center justify-center py-12">
-      <div className="card w-full max-w-md bg-base-100 shadow-xl">
+      <div className="w-full max-w-md shadow-xl card bg-base-100">
         <div className="card-body">
-          <h2 className="card-title text-2xl font-bold text-center mb-6">
+          <h2 className="mb-6 text-2xl font-bold text-center card-title">
             Welcome Back!
           </h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
@@ -59,10 +59,10 @@ const Login = () => {
               required
             />
 
-            <div className="form-control mt-6">
+            <div className="mt-6 form-control">
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="w-full btn btn-primary"
                 disabled={loginMutation.isPending}
               >
                 {loginMutation.isPending ? (
@@ -75,10 +75,10 @@ const Login = () => {
           </form>
 
           {loginMutation.isError && (
-            <div className="alert alert-error mt-4">
+            <div className="mt-4 alert alert-error">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="stroke-current shrink-0 h-6 w-6"
+                className="w-6 h-6 stroke-current shrink-0"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -93,7 +93,7 @@ const Login = () => {
             </div>
           )}
 
-          <div className="text-center mt-4">
+          <div className="mt-4 text-center">
             <p className="text-sm">
               Don't have an account?{" "}
               <Link to="/signup" className="link link-primary">

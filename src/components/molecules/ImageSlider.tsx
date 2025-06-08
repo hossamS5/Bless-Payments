@@ -17,7 +17,7 @@ export const ImageSlider = ({ images, className = "" }: ImageSliderProps) => {
       pagination={{ clickable: true }}
       className={`w-full rounded-lg ${className}`}
     >
-      {images.map((url, index) => (
+      {images?.map((url, index) => (
         <SwiperSlide key={index}>
           <img
             src={
