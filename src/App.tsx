@@ -3,6 +3,7 @@ import routes from "./routes/routes";
 import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import { Suspense } from "react";
+import { PrivateLayout } from "./components/layouts/PrivateLayout";
 
 function App() {
   const token = false;
@@ -11,25 +12,25 @@ function App() {
     <Suspense fallback={"loading"}>
       <BrowserRouter>
         <Routes>
-          {/* <Route element={token ? <PrivateLayout /> : <PublicLayout />}> */}
-          {routes.map((route) => (
+          <Route element={<PrivateLayout />}>
+            {routes.map((route) => (
+              <Route
+                key={route.path}
+                path={route.path}
+                element={
+                  route.isPublic ? (
+                    <PublicRoute component={route.component} />
+                  ) : (
+                    <PrivateRoute component={route.component} />
+                  )
+                }
+              />
+            ))}
             <Route
-              key={route.path}
-              path={route.path}
-              element={
-                route.isPublic ? (
-                  <PublicRoute component={route.component} />
-                ) : (
-                  <PrivateRoute component={route.component} />
-                )
-              }
+              path="*"
+              element={<Navigate replace to={token ? "/" : "/login"} />}
             />
-          ))}
-          <Route
-            path="*"
-            element={<Navigate replace to={token ? "/" : "/login"} />}
-          />
-          {/* </Route> */}
+          </Route>
         </Routes>
       </BrowserRouter>
     </Suspense>
