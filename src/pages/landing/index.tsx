@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import PetCard from "../../components/molecules/PetCard";
 import { useQuery } from "@tanstack/react-query";
 import { getPetByStatus } from "../../api/pets";
