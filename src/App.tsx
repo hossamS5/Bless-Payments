@@ -4,36 +4,41 @@ import PublicRoute from "./routes/PublicRoute";
 import PrivateRoute from "./routes/PrivateRoute";
 import { Suspense } from "react";
 import { PrivateLayout } from "./components/layouts/PrivateLayout";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 function App() {
   const token = false;
 
   return (
-    <Suspense fallback={"loading"}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<PrivateLayout />}>
-            {routes.map((route) => (
+    <QueryClientProvider client={queryClient}>
+      <Suspense fallback={"loading"}>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<PrivateLayout />}>
+              {routes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={
+                    route.isPublic ? (
+                      <PublicRoute component={route.component} />
+                    ) : (
+                      <PrivateRoute component={route.component} />
+                    )
+                  }
+                />
+              ))}
               <Route
-                key={route.path}
-                path={route.path}
-                element={
-                  route.isPublic ? (
-                    <PublicRoute component={route.component} />
-                  ) : (
-                    <PrivateRoute component={route.component} />
-                  )
-                }
+                path="*"
+                element={<Navigate replace to={token ? "/" : "/login"} />}
               />
-            ))}
-            <Route
-              path="*"
-              element={<Navigate replace to={token ? "/" : "/login"} />}
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </Suspense>
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </Suspense>
+    </QueryClientProvider>
   );
 }
 

@@ -26,9 +26,9 @@ export const PetCard = ({ pet }: PetCardProps) => {
             </div>
           ))}
         </div>
-        <div className="card-actions justify-end mt-4">
+        <div className="card-actions justify-between mt-4">
           <div
-            className={`badge badge-lg ${
+            className={`badge badge-lg text-xs capitalize shadpw-sm text-gray-600 ${
               pet.status === "available"
                 ? "badge-success"
                 : pet.status === "pending"
@@ -38,6 +38,7 @@ export const PetCard = ({ pet }: PetCardProps) => {
           >
             {pet.status}
           </div>
+
           <Link to={`/pet/${pet.id}`} className="btn btn-primary">
             View Details
           </Link>
