@@ -27,7 +27,7 @@ const PetCard = ({ pet }: PetCardProps) => {
           </div>
         </div>
         <div className="flex flex-wrap gap-2 mt-2">
-          {pet.tags.map((tag) => (
+          {pet?.tags?.map((tag) => (
             <div key={tag.id} className="badge badge-outline badge-md">
               {shortenName(tag?.name || "", 8)}
             </div>

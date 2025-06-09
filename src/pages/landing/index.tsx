@@ -2,8 +2,8 @@ import { useState } from "react";
 import PetCard from "../../components/molecules/PetCard";
 import { useQuery } from "@tanstack/react-query";
 import { getPetByStatus } from "../../api/pets";
-import Spinner from "../../components/atoms/Spinner";
 import ErrorTemplate from "../../components/templates/ErrorTemplate";
+import CardsSkeleton from "../../components/atoms/CardsSkeleton";
 
 const Landing = () => {
   const [selectedStatus, setSelectedStatus] = useState<string[]>(["available"]);
@@ -26,7 +26,7 @@ const Landing = () => {
   };
 
   if (isLoading) {
-    return <Spinner />;
+    return <CardsSkeleton num={6} />;
   }
 
   if (isError) {
