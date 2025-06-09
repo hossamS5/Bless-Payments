@@ -1,5 +1,3 @@
-import React from "react";
-
 const CardsSkeleton = ({ num = 6 }: { num: number }) => {
   const skeleton = [...Array(num).keys()].map(() => (
     <div className="overflow-hidden transition-shadow duration-300 shadow-xl animate-pulse h-96 card max-w-96 bg-base-200 hover:shadow-2xl">
